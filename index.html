@@ -56,7 +56,8 @@
     function startGame(type) {
       const gameDiv = document.getElementById("game");
       gameDiv.innerHTML = '';
-      document.getElementById("congrats").style.display = 'none';
+      document.getElementById("output").style.display = 'block';
+      document.getElementById("game").style.display = 'block';
       if (type === "ticTacToe") createTicTacToe();
       else if (type === "memoryGame") memoryGame();
       else if (type === "catchBall") catchBall();
