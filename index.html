@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>С Днём Защитника Отечества!</title>
+  <title> Поздравляю С Днём Защитника Отечества!</title>
   <style>
   body {
     font-family: 'Segoe UI', sans-serif;
@@ -132,12 +132,12 @@
   <script>
 const greetings = {
   "Диас": {
-    photo: "dias.jpg",
+    photo: "dias.JPG",
     message: "Диас, с 7 Мая! Пусть сила, разум и доброта ведут тебя всегда! Спасибо за твою отзывчивость и внимательность, друг 💪",
     game: "quiz"
   },
   "Ернар": {
-    photo: "yernar.jpg",
+    photo: "yernar.JPG",
     message: "Ернар, с 7 Мая! Желаю вам успехов во всём и море любви в будущей семейной жизни ✨",
     game: "multiQuiz"
   },
@@ -147,7 +147,7 @@ const greetings = {
     game: "memory"
   },
   "Ерасыл": {
-    photo: "yerasyl.jpg",
+    photo: "yerasyl.JPG",
     message: "Ерасыл, поздравляю вас с праздником! 🎉 Желаю всех благ!",
     game: "memory"
   }
@@ -182,22 +182,56 @@ function checkName() {
 
 function quizGame() {
   const gameDiv = document.getElementById("game");
-  gameDiv.innerHTML = '';
-  const question = document.createElement('p');
-  question.textContent = 'Столица Казахстана?';
-  const options = ['Алматы', 'Астана', 'Шымкент'];
-  options.forEach(option => {
-    const btn = document.createElement('button');
-    btn.textContent = option;
-    btn.style.margin = '5px';
-    btn.onclick = () => {
-      if (option === 'Астана') showCongrats();
-      else alert('Неправильно. Попробуй ещё!');
-    };
-    gameDiv.appendChild(btn);
-  });
-  gameDiv.appendChild(question);
+  const questions = [
+    {
+      q: 'Столица Бразилии?',
+      correct: 'Бразилиа',
+      options: ['Рио-де-Жанейро', 'Бразилиа', 'Сан-Паулу']
+    },
+    {
+      q: 'Столица Австралии?',
+      correct: 'Канберра',
+      options: ['Сидней', 'Мельбурн', 'Канберра']
+    },
+    {
+      q: 'Столица Казахстана?',
+      correct: 'Астана',
+      options: ['Алматы', 'Астана', 'Шымкент']
+    }
+  ];
+
+  let current = 0;
+
+  function showQuestion() {
+    gameDiv.innerHTML = '';
+    const q = questions[current];
+    const question = document.createElement('p');
+    question.textContent = `❓ ${q.q}`;
+    gameDiv.appendChild(question);
+
+    q.options.forEach(option => {
+      const btn = document.createElement('button');
+      btn.textContent = option;
+      btn.style.margin = '6px';
+      btn.onclick = () => {
+        if (option === q.correct) {
+          current++;
+          if (current < questions.length) {
+            showQuestion();
+          } else {
+            showCongrats();
+          }
+        } else {
+          alert('Неправильно. Попробуй ещё!');
+        }
+      };
+      gameDiv.appendChild(btn);
+    });
+  }
+
+  showQuestion();
 }
+
 
 function multiQuizGame() {
   const gameDiv = document.getElementById("game");
@@ -274,23 +308,17 @@ function showCongrats() {
   const gameDiv = document.getElementById("game");
   gameDiv.innerHTML = '';
 
-  // Добавим торт с анимацией
-  const cake = document.createElement('div');
-  cake.className = 'cake';
-  cake.textContent = '🍰 Нажми, чтобы разрезать торт!';
-  cake.onclick = () => {
-    document.getElementById("photo").src = greeting.photo;
-    document.getElementById("message").innerText = greeting.message;
-    document.getElementById("congrats").style.display = 'block';
-    cake.remove();
+  document.getElementById("photo").src = greeting.photo;
+  document.getElementById("message").innerText = greeting.message;
+  document.getElementById("congrats").style.display = 'block';
 
-    // Кнопка назад
-    const backBtn = document.createElement("a");
-    backBtn.className = "back-button";
-    backBtn.textContent = "⬅ Назад в меню";
-    backBtn.onclick = () => location.reload();
-    document.getElementById("congrats").appendChild(backBtn);
-  };
+  // Кнопка "Назад в меню"
+  const backBtn = document.createElement("a");
+  backBtn.className = "back-button";
+  backBtn.textContent = "⬅ Назад в меню";
+  backBtn.onclick = () => location.reload();
+  document.getElementById("congrats").appendChild(backBtn);
+};
 
   gameDiv.appendChild(cake);
 }
